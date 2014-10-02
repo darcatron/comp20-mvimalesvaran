@@ -1,0 +1,14 @@
+#title {
+	text-align: center;
+}
+
+#music_video {
+	display: block;
+	width: 500px;
+	height: 300px;
+	margin: 0 auto;
+}
+
+#lyrics {
+	text-align: center;
+}
