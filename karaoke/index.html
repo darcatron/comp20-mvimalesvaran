@@ -15,12 +15,31 @@
 		<div id="lyrics"></div>
 
 		<script type="text/javascript">	
+
+		/*IDEA: Put lyrics and two pics in array. Loop through array in steady interval*/
 			var video = document.getElementById("music_video");
 			var verse = document.getElementById("lyrics");
+			
+			function lyrics(time) {
+				if (time <= 20) {
+					verse.innerHTML = "Oh, I could hide 'neath the wings Of the bluebird as she sings. The six o'clock alarm would never ring.";
+				} else if (time <= 36) {
+					verse.innerHTML = "But it rings and I rise, Wipe the sleep out of my eyes. My shavin' razor's cold and it stings.";
+				}
+			}
+				
+				
 
-			setInterval(function(){verse.innerHTML = video.currentTime}, 2000);
-			
-			
+			// 	else if (time <= 53) {
+			// 		verse.innerHTML = "Cheer up, Sleepy Jean.
+			// 		Oh, what can it mean.
+			// 		To a daydream believer
+			// 		And a homecoming queen.";
+			// 	}
+			// }
+
+			setInterval(function(){lyrics(video.currentTime)}, 2000);
+
 		</script>
 	</body>
 </html>	
