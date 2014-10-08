@@ -20,26 +20,33 @@
 			var video = document.getElementById("music_video");
 			var verse = document.getElementById("lyrics");
 			
+			video.addEventListener("timeupdate", function (){lyrics(video.currentTime)});
+
 			function lyrics(time) {
-				if (time <= 20) {
-					verse.innerHTML = "Oh, I could hide 'neath the wings Of the bluebird as she sings. The six o'clock alarm would never ring.";
-				} else if (time <= 36) {
-					verse.innerHTML = "But it rings and I rise, Wipe the sleep out of my eyes. My shavin' razor's cold and it stings.";
+				/* ADD 2 PICTURES 
+				!!!!!!!!!!!!!!
+				!!!!!!!!!!!!!!
+				!!!!!!!!!!!!
+				!!!!!!!!!!!!!!!!!
+				!!!!!!!!!!!!	
+				 */
+				if (time >= 5 && time <= 35) {
+					verse.innerHTML = "<br/> Oh, I could hide 'neath the wings <br/> Of the bluebird as she sings. <br/> The six o'clock alarm would never ring. <br/> But it rings and I rise, <br/> Wipe the sleep out of my eyes. <br/> My shavin' razor's cold and it stings.";
+				} else if (time >= 37 && time <= 54) {
+					verse.innerHTML = "<br/> Cheer up, Sleepy Jean. <br/> Oh, what can it mean. <br/> To a daydream believer <br/> And a homecoming queen.";
+				} else if (time >= 55 && time <= 84) {
+					verse.innerHTML = "<br/> You once thought of me <br/> As a white knight on a steed. <br/> Now you know how happy I can be.<br/> Oh, and our good times start and end <br/> Without dollar one to spend.<br/> But how much, baby, do we really need.";
+				} else if (time >= 85 && time <= 120) {
+					verse.innerHTML = "<br/> Cheer up, Sleepy Jean. <br/> Oh, what can it mean. <br/> To a daydream believer <br/> And a homecoming queen. <br/> Cheer up, Sleepy Jean. <br/> Oh, what can it mean. <br/> To a daydream believer <br/> And a homecoming queen.";
+				} else if (time >= 121  && time <= 129) {
+					verse.innerHTML = "<br/> [Instrumental interlude]";
+				} else if (time >= 130 && time <= 162) {
+					verse.innerHTML = "<br/> Cheer up, Sleepy Jean. <br/> Oh, what can it mean. <br/> To a daydream believer <br/> And a homecoming queen. <br/> [Repeat and fade]";
+				} else {
+					verse.innerHTML = "";
 				}
 			}
-				
-				
-
-			// 	else if (time <= 53) {
-			// 		verse.innerHTML = "Cheer up, Sleepy Jean.
-			// 		Oh, what can it mean.
-			// 		To a daydream believer
-			// 		And a homecoming queen.";
-			// 	}
-			// }
-
-			setInterval(function(){lyrics(video.currentTime)}, 2000);
-
+						
 		</script>
 	</body>
 </html>	
