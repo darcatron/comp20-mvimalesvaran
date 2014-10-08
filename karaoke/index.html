@@ -8,45 +8,34 @@
 	</head>
 
 	<body>
-
 		<h1 id="title">Daydream Believer</h1>
 
 		<video src="http://www.cs.tufts.edu/comp/20/daydream_believer.webm" id="music_video" controls></video>
 		<div id="lyrics"></div>
 
 		<script type="text/javascript">	
-
-		/*IDEA: Put lyrics and two pics in array. Loop through array in steady interval*/
 			var video = document.getElementById("music_video");
 			var verse = document.getElementById("lyrics");
 			
 			video.addEventListener("timeupdate", function (){lyrics(video.currentTime)});
 
 			function lyrics(time) {
-				/* ADD 2 PICTURES 
-				!!!!!!!!!!!!!!
-				!!!!!!!!!!!!!!
-				!!!!!!!!!!!!
-				!!!!!!!!!!!!!!!!!
-				!!!!!!!!!!!!	
-				 */
 				if (time >= 5 && time <= 35) {
-					verse.innerHTML = "<br/> Oh, I could hide 'neath the wings <br/> Of the bluebird as she sings. <br/> The six o'clock alarm would never ring. <br/> But it rings and I rise, <br/> Wipe the sleep out of my eyes. <br/> My shavin' razor's cold and it stings.";
+					verse.innerHTML = "<br/>Oh, I could hide 'neath the wings <br/> Of the bluebird as she sings. <br/> The six o'clock alarm would never ring. <br/> But it rings and I rise, <br/> Wipe the sleep out of my eyes. <br/> My shavin' razor's cold and it stings.<br/><img src='Pictures/wings_400_200.png'></img>";
 				} else if (time >= 37 && time <= 54) {
 					verse.innerHTML = "<br/> Cheer up, Sleepy Jean. <br/> Oh, what can it mean. <br/> To a daydream believer <br/> And a homecoming queen.";
 				} else if (time >= 55 && time <= 84) {
-					verse.innerHTML = "<br/> You once thought of me <br/> As a white knight on a steed. <br/> Now you know how happy I can be.<br/> Oh, and our good times start and end <br/> Without dollar one to spend.<br/> But how much, baby, do we really need.";
+					verse.innerHTML = "<br/> You once thought of me <br/> As a white knight on a steed. <br/> Now you know how happy I can be.<br/> Oh, and our good times start and end <br/> Without dollar one to spend.<br/> But how much, baby, do we really need.<br/> <img src='Pictures/white_knight_388_412.gif'></img>";
 				} else if (time >= 85 && time <= 120) {
 					verse.innerHTML = "<br/> Cheer up, Sleepy Jean. <br/> Oh, what can it mean. <br/> To a daydream believer <br/> And a homecoming queen. <br/> Cheer up, Sleepy Jean. <br/> Oh, what can it mean. <br/> To a daydream believer <br/> And a homecoming queen.";
-				} else if (time >= 121  && time <= 129) {
+				} else if (time >= 120  && time <= 126) {
 					verse.innerHTML = "<br/> [Instrumental interlude]";
-				} else if (time >= 130 && time <= 162) {
+				} else if (time >= 127.5 && time <= 162) {
 					verse.innerHTML = "<br/> Cheer up, Sleepy Jean. <br/> Oh, what can it mean. <br/> To a daydream believer <br/> And a homecoming queen. <br/> [Repeat and fade]";
 				} else {
 					verse.innerHTML = "";
 				}
-			}
-						
+			}			
 		</script>
 	</body>
 </html>	
