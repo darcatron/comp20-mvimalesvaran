@@ -3,19 +3,43 @@
 <html>
 	<head>
 		<title>Tufts Marauder's Map</title>
+		<meta charset="utf-8" />
 		<link rel="stylesheet" href="style.css"/>
 		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBGvUJlso3Vyw_1J4CpBvob7RowMWQssvk"></script>
 	    <script type="text/javascript">
 		    // xhr = new XMLHttpRequest();
 
+		    function success(pos) {
+			  var crd = pos.coords;
+
+			  var marker = new google.maps.Marker({
+			  	position: new google.maps.LatLng(crd.latitude, crd.longitude),
+			  	title: "me!"
+			  });
+
+			  marker.setMap(map);
+
+			  console.log('Your current position is:');
+			  console.log('Latitude : ' + crd.latitude);
+			  console.log('Longitude: ' + crd.longitude);
+			  console.log('More or less ' + crd.accuracy + ' meters.');
+			};
+
+			function error(err) {
+			  console.warn('ERROR(' + err.code + '): ' + err.message);
+			};
+
+			navigator.geolocation.getCurrentPosition(success, error);
+
 		    function initialize() {
-				var mapOptions, map;        
+				var mapOptions;
 
 		        mapOptions = {
 		          center: { lat: 42.358431, lng: -71.059773},
 		          zoom: 8
 		        };
 
+		        // Global Google map
 		        map = new google.maps.Map(document.getElementById('map-canvas'),
 		            mapOptions);
 
