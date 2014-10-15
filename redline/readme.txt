@@ -5,7 +5,7 @@ Identify what aspects of the work have been correctly implemented and what have 
 
 Is it possible to request the real-time data from MBTA using XMLHttpRequest?
 
---- No, because the server decides who has access to the file and restricts
+--- It depends, because the server decides who has access to the file and restricts
 	clients outside of a set domain.
 
 Say approximately how many hours you have spent completing the assignment.
