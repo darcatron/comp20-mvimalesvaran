@@ -15,8 +15,10 @@
 	    					nr: "pictures/nr_50_50.png", 
 	    					snape: "pictures/snape_50_50.png", 
 	    					hescott: "pictures/hescott_50_69.png"};
+			//Statue of Liberty, Sri Lanka, North Korea, Atlantic Ocean
+	    	const LOCATIONS = [[40.6892, -74.0444], [7.0000, 81.0000], 
+	    						[40.0000, 127.0000], [42.434362, -70.688298]];
 	    	const PRECISION = 4; //floating point number precision
-	    	crd = null;
 		    
 		    function initialize() {
 		        var mapOptions = {
@@ -32,7 +34,7 @@
 	  	    }
 
 		    function set_markers(pos) {
-			  crd = pos.coords;
+			  var crd = pos.coords;
 			  var current_date = new Date();
 			  var date_time = (current_date.getMonth()+1)  + "/"  +
 						    	current_date.getDate() + "/" +
@@ -68,13 +70,15 @@
 			}
 		   
 	 		function find_others() {
+	 			var lat = 0, lng = 1, crd = LOCATIONS[getRandomInt(0, 3)];
+
 	 			xhr = new XMLHttpRequest();
 	 			xhr.open("POST", "http://chickenofthesea.herokuapp.com/sendLocation", true);
 		        xhr.onreadystatechange = dataReady;
 		        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		        xhr.send("login=" + GLOBAL_LOGIN + "&lat=" + crd.latitude + 
+		        xhr.send("login=" + GLOBAL_LOGIN + "&lat=" + crd[lat] + 
 		        												"&lng=" + 
-		        												crd.longitude);
+		        												crd[lng]);
 	 		}
 			
 			function dataReady() {
@@ -104,6 +108,10 @@
 		    	}
 
 		    	function plot_students(login, lat, lng, time_seen) {
+		    		if (login == "Dipstick") {
+		    			console.log("Dipstick is: " + lat + ", " + lng);
+		    		}
+
 		    		var content_string_student = '<h1>' + login + '</h1>' + 
 			  							'<div id="contentString">' +
 			  							'<p>Latitude: ' + 
@@ -145,7 +153,11 @@
 			  		google.maps.event.addDomListener(marker_character, 'click', function () {infowindow_character.open(map, marker_character);});
 		    	};
 		    }
-		    
+		   
+		    function getRandomInt (min, max) {
+    			return Math.floor(Math.random() * (max - min + 1)) + min;
+			}
+
 		    google.maps.event.addDomListener(window, 'load', initialize);
 	    </script>
 	</head>
