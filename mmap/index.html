@@ -8,7 +8,13 @@
 		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBGvUJlso3Vyw_1J4CpBvob7RowMWQssvk"></script>
 	    <script type="text/javascript">
 	    	const GLOBAL_LOGIN = "Dipstick"
-	    	const IMAGES = {me: "pictures/gandolf_50_50.jpg", carmen: "pictures/carmen_50_50.png", waldo: "pictures/waldo_50_60.png", batman: "pictures/batman_50_50.png", nr: "pictures/nr_50_50.png", snape: "pictures/snape_50_50.png", hescott: "pictures/hescott_50_69.png"};
+	    	const IMAGES = {me: "pictures/gandolf_50_50.jpg", 
+	    					carmen: "pictures/carmen_50_50.png", 
+	    					waldo: "pictures/waldo_50_60.png", 
+	    					batman: "pictures/batman_50_50.png", 
+	    					nr: "pictures/nr_50_50.png", 
+	    					snape: "pictures/snape_50_50.png", 
+	    					hescott: "pictures/hescott_50_69.png"};
 	    	const PRECISION = 4; //floating point number precision
 	    	crd = null;
 		    
@@ -36,7 +42,10 @@
 			                	current_date.getSeconds();
 			  var content_string_me = '<h1>Me</h1>' + 
 			  							'<div id="contentString">' +
-			  							'<p>Latitude: ' + crd.latitude.toFixed(PRECISION) + ' Longitude: ' + crd.longitude.toFixed(PRECISION) +
+			  							'<p>Latitude: ' + 
+			  							crd.latitude.toFixed(PRECISION) + 
+			  							' Longitude: ' + 
+			  							crd.longitude.toFixed(PRECISION) +
 			  							'</br>Last Seen: ' + date_time + '</p>';
 			  var marker_me = new google.maps.Marker({
 			  	position: new google.maps.LatLng(crd.latitude, crd.longitude),
@@ -63,7 +72,9 @@
 	 			xhr.open("POST", "http://chickenofthesea.herokuapp.com/sendLocation", true);
 		        xhr.onreadystatechange = dataReady;
 		        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		        xhr.send("login=" + GLOBAL_LOGIN + "&lat=" + crd.latitude + "&lng=" + crd.longitude);
+		        xhr.send("login=" + GLOBAL_LOGIN + "&lat=" + crd.latitude + 
+		        												"&lng=" + 
+		        												crd.longitude);
 	 		}
 			
 			function dataReady() {
@@ -79,25 +90,27 @@
 		    function add_markers(json_data) {
 		    	for (i = 0; i < json_data.characters.length; i++) {
 		    		console.log("character name: " + json_data.characters[i].name);	
-		    		plot_characters(json_data.characters[i].name, json_data.characters[i].loc.latitude, json_data.characters[i].loc.longitude, json_data.characters[i].loc.note);
+		    		plot_characters(json_data.characters[i].name, 
+		    						 json_data.characters[i].loc.latitude,
+		    						 json_data.characters[i].loc.longitude, 
+		    						 json_data.characters[i].loc.note);
 		    	}  
 		      	
 		    	for (i = 0; i < json_data.students.length; i++) {
-		    		plot_students(json_data.students[i].login, json_data.students[i].lat, json_data.students[i].lng, json_data.students[i].created_at);
+		    		plot_students(json_data.students[i].login, 
+		    						json_data.students[i].lat, 
+		    						json_data.students[i].lng, 
+		    						json_data.students[i].created_at);
 		    	}
 
 		    	function plot_students(login, lat, lng, time_seen) {
-		    		var	current_date = new Date();
-		    		var date_time = (current_date.getMonth()+1)  + "/"  +
-						    	current_date.getDate() + "/" +
-			                	current_date.getFullYear() + " @ "  +
-			                	current_date.getHours() + ":"  +
-			                	current_date.getMinutes() + ":" +
-			                	current_date.getSeconds();
 		    		var content_string_student = '<h1>' + login + '</h1>' + 
 			  							'<div id="contentString">' +
-			  							'<p>Latitude: ' + lat.toFixed(PRECISION) + ' Longitude: ' + lng.toFixed(PRECISION) +
-			  							'</br>Last Seen: ' + date_time + '</p>';
+			  							'<p>Latitude: ' + 
+			  							lat.toFixed(PRECISION) + 
+			  							' Longitude: ' + 
+			  							lng.toFixed(PRECISION) +
+			  							'</br>Last Seen: ' + time_seen + '</p>';
 		    		var marker_student = new google.maps.Marker({
 		    			position: new google.maps.LatLng(lat, lng),
 		    			map: map,
@@ -113,7 +126,10 @@
 		    	function plot_characters(name, lat, lng, note) {
 		    		var content_string_character = '<h1>' + name + '</h1>' + 
 			  							'<div id="contentString">' +
-			  							'<p>Latitude: ' + lat.toFixed(PRECISION) + ' Longitude: ' + lng.toFixed(PRECISION) +
+			  							'<p>Latitude: ' + 
+			  							lat.toFixed(PRECISION) + 
+			  							' Longitude: ' + 
+			  							lng.toFixed(PRECISION) +
 			  							'</br>Note: ' + note + '</p>';
 		    		var marker_character = new google.maps.Marker({
 		    			position: new google.maps.LatLng(lat, lng),
@@ -128,7 +144,6 @@
 
 			  		google.maps.event.addDomListener(marker_character, 'click', function () {infowindow_character.open(map, marker_character);});
 		    	};
-
 		    }
 		    
 		    google.maps.event.addDomListener(window, 'load', initialize);
