@@ -6,5 +6,7 @@ Identify anyone with whom you have collaborated or discussed the assignment.
 
 Say approximately how many hours you have spent completing the assignment.
 1 hr
-6:13 - 7
-12:20 - 12:45
+45min
+25min
+1hr
+5:03 -
