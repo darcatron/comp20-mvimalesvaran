@@ -9,12 +9,13 @@
 	    <script type="text/javascript">
 	    	const GLOBAL_LOGIN = "Dipstick"
 	    	const IMAGES = {me: "pictures/gandolf_50_50.jpg", carmen: "pictures/carmen_50_50.png", waldo: "pictures/waldo_50_60.png", batman: "pictures/batman_50_50.png", nr: "pictures/nr_50_50.png", snape: "pictures/snape_50_50.png", hescott: "pictures/hescott_50_69.png"};
+	    	const PRECISION = 4; //floating point number precision
 	    	crd = null;
 		    
 		    function initialize() {
 		        var mapOptions = {
 		          center: { lat: 42.358431, lng: -71.059773},
-		          zoom: 8
+		          zoom: 11
 		        };
 
 		        // Global Google map
@@ -35,7 +36,7 @@
 			                	current_date.getSeconds();
 			  var content_string_me = '<h1>Me</h1>' + 
 			  							'<div id="contentString">' +
-			  							'<p>Latitude: ' + crd.latitude + ' Longitude: ' + crd.longitude +
+			  							'<p>Latitude: ' + crd.latitude.toFixed(PRECISION) + ' Longitude: ' + crd.longitude.toFixed(PRECISION) +
 			  							'</br>Last Seen: ' + date_time + '</p>';
 			  var marker_me = new google.maps.Marker({
 			  	position: new google.maps.LatLng(crd.latitude, crd.longitude),
@@ -45,7 +46,7 @@
 			  });
 
 			  var infowindow_me = new google.maps.InfoWindow({
-		    	content: content_string_me
+		    	content: content_string_me,
 			  });
 			  google.maps.event.addDomListener(marker_me, 'click', function () {infowindow_me.open(map, marker_me);});
 			  find_others();
@@ -81,15 +82,38 @@
 		    		plot_characters(json_data.characters[i].name, json_data.characters[i].loc.latitude, json_data.characters[i].loc.longitude, json_data.characters[i].loc.note);
 		    	}  
 		      	
-		    
-		    	function plot_students(login, lat, lng, time_seen) {
+		    	for (i = 0; i < json_data.students.length; i++) {
+		    		plot_students(json_data.students[i].login, json_data.students[i].lat, json_data.students[i].lng, json_data.students[i].created_at);
+		    	}
 
+		    	function plot_students(login, lat, lng, time_seen) {
+		    		var	current_date = new Date();
+		    		var date_time = (current_date.getMonth()+1)  + "/"  +
+						    	current_date.getDate() + "/" +
+			                	current_date.getFullYear() + " @ "  +
+			                	current_date.getHours() + ":"  +
+			                	current_date.getMinutes() + ":" +
+			                	current_date.getSeconds();
+		    		var content_string_student = '<h1>' + login + '</h1>' + 
+			  							'<div id="contentString">' +
+			  							'<p>Latitude: ' + lat.toFixed(PRECISION) + ' Longitude: ' + lng.toFixed(PRECISION) +
+			  							'</br>Last Seen: ' + date_time + '</p>';
+		    		var marker_student = new google.maps.Marker({
+		    			position: new google.maps.LatLng(lat, lng),
+		    			map: map,
+		    			title: login
+		    		});
+					var infowindow_student = new google.maps.InfoWindow({
+		    			content: content_string_student
+			  		});
+
+			  		google.maps.event.addDomListener(marker_student, 'click', function () {infowindow_student.open(map, marker_student);});
 		    	};
 	
 		    	function plot_characters(name, lat, lng, note) {
 		    		var content_string_character = '<h1>' + name + '</h1>' + 
 			  							'<div id="contentString">' +
-			  							'<p>Latitude: ' + lat + ' Longitude: ' + lng +
+			  							'<p>Latitude: ' + lat.toFixed(PRECISION) + ' Longitude: ' + lng.toFixed(PRECISION) +
 			  							'</br>Note: ' + note + '</p>';
 		    		var marker_character = new google.maps.Marker({
 		    			position: new google.maps.LatLng(lat, lng),

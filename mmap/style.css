@@ -3,3 +3,5 @@ html, body, #map-canvas {
 	margin: 0px; 
 	padding: 0px;
 }
+
+.gm-style-iw div {overflow:visible !important;}
