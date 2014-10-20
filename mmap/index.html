@@ -22,6 +22,7 @@
 	    	const PRECISION = 4; 
 		    //coordinates of main user 
 		    my_crd = null;
+		    distances_table = [];
 
 		    function initialize() {
 		        var mapOptions = {
@@ -29,9 +30,9 @@
 		          zoom: 11
 		        };
 
-		        // Global Google map
+		        //Global Google map
 		        map = new google.maps.Map(document.getElementById('map-canvas'),
-		            mapOptions);
+		           mapOptions);
 
 		        navigator.geolocation.getCurrentPosition(set_markers, error);		        
 	  	    }
@@ -110,6 +111,8 @@
 		    						json_data.students[i].created_at);
 		    	}
 
+		    	create_distance_table()
+		    	
 		    	function plot_students(login, lat, lng, time_seen) {
 		    		if (login == "Dipstick") {
 		    			console.log("Dipstick is: " + lat + ", " + lng);
@@ -155,6 +158,8 @@
 		    		create_polyline(new google.maps.LatLng(lat, lng), 
 		    							new google.maps.LatLng(my_crd.latitude, 
 		    												 my_crd.longitude));
+
+		    		distances_table.push([name, [lat, lng]]);
 			  		google.maps.event.addDomListener(marker_character, 'click', function () {infowindow_character.open(map, marker_character);});
 
 		    	};
@@ -172,6 +177,40 @@
 				path.setMap(map);
 		   	}
 
+		   	function create_distance_table () {
+		   		var name = 0, coords = 1, lat = 0, lng = 1, distance = null;
+		   		var table = document.getElementById("distances-table");
+									   		
+		   		distances_table.forEach(function (entry) {
+		   			distance = get_distance(entry[coords][lat], 
+		   										entry[coords][lng], 
+		   										my_crd.latitude, 
+		   										my_crd.longitude);
+		   			table.innerHTML += entry[name].charAt(0).toUpperCase() + 
+		   								entry[name].substr(1).toLowerCase() +
+		   								" | " + distance + " meters</br>";
+		   		});		   		
+		   		map.controls[google.maps.ControlPosition.TOP_RIGHT].push(table);
+		   	}
+
+			var rad = function(x) {
+			  return x * Math.PI / 180;
+			};
+
+			var get_distance = function(p1_lat, p1_lng, p2_lat, p2_lng) {
+			  var R = 6378137; // Earth’s mean radius in meters
+			  var dLat = rad(p2_lat - p1_lat);
+			  var dLong = rad(p2_lng - p1_lng);
+			  var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+			    Math.cos(rad(p1_lat)) * Math.cos(rad(p2_lat)) *
+			    Math.sin(dLong / 2) * Math.sin(dLong / 2);
+			  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+			  var d = R * c;
+			  // returns the distance in meters 
+			  // number formating credits to StackOverFlow user VisioN
+			  return d.toFixed(PRECISION).replace(/\d(?=(\d{3})+\.)/g, '$&,'); 
+			};
+
 		    function get_random_int (min, max) {
     			return Math.floor(Math.random() * (max - min + 1)) + min;
 			}
@@ -181,6 +220,7 @@
 	</head>
 
 	<body>
+		<div id="distances-table"></div>
 		<div id="map-canvas">loading map...</div>
 	</body>
 	
