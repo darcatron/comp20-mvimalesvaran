@@ -18,8 +18,11 @@
 			//Statue of Liberty, Sri Lanka, North Korea, Atlantic Ocean
 	    	const LOCATIONS = [[40.6892, -74.0444], [7.0000, 81.0000], 
 	    						[40.0000, 127.0000], [42.434362, -70.688298]];
-	    	const PRECISION = 4; //floating point number precision
-		    
+	    	//floating point number precision
+	    	const PRECISION = 4; 
+		    //coordinates of main user 
+		    my_crd = null;
+
 		    function initialize() {
 		        var mapOptions = {
 		          center: { lat: 42.358431, lng: -71.059773},
@@ -34,7 +37,7 @@
 	  	    }
 
 		    function set_markers(pos) {
-			  var crd = pos.coords;
+			  my_crd = pos.coords;
 			  var current_date = new Date();
 			  var date_time = (current_date.getMonth()+1)  + "/"  +
 						    	current_date.getDate() + "/" +
@@ -45,12 +48,13 @@
 			  var content_string_me = '<h1>Me</h1>' + 
 			  							'<div id="contentString">' +
 			  							'<p>Latitude: ' + 
-			  							crd.latitude.toFixed(PRECISION) + 
+			  							my_crd.latitude.toFixed(PRECISION) + 
 			  							' Longitude: ' + 
-			  							crd.longitude.toFixed(PRECISION) +
+			  							my_crd.longitude.toFixed(PRECISION) +
 			  							'</br>Last Seen: ' + date_time + '</p>';
 			  var marker_me = new google.maps.Marker({
-			  	position: new google.maps.LatLng(crd.latitude, crd.longitude),
+			  	position: new google.maps.LatLng(my_crd.latitude, 
+			  										my_crd.longitude),
 			  	map: map,
 			  	title: "Me!",
 			  	icon: IMAGES["me"]
@@ -70,7 +74,7 @@
 			}
 		   
 	 		function find_others() {
-	 			var lat = 0, lng = 1, crd = LOCATIONS[getRandomInt(0, 3)];
+	 			var lat = 0, lng = 1, crd = LOCATIONS[get_random_int(0, 3)];
 
 	 			xhr = new XMLHttpRequest();
 	 			xhr.open("POST", "http://chickenofthesea.herokuapp.com/sendLocation", true);
@@ -93,7 +97,6 @@
 
 		    function add_markers(json_data) {
 		    	for (i = 0; i < json_data.characters.length; i++) {
-		    		console.log("character name: " + json_data.characters[i].name);	
 		    		plot_characters(json_data.characters[i].name, 
 		    						 json_data.characters[i].loc.latitude,
 		    						 json_data.characters[i].loc.longitude, 
@@ -149,12 +152,27 @@
 		    		var infowindow_character = new google.maps.InfoWindow({
 		    			content: content_string_character
 			  		});
-
+		    		create_polyline(new google.maps.LatLng(lat, lng), 
+		    							new google.maps.LatLng(my_crd.latitude, 
+		    												 my_crd.longitude));
 			  		google.maps.event.addDomListener(marker_character, 'click', function () {infowindow_character.open(map, marker_character);});
+
 		    	};
 		    }
-		   
-		    function getRandomInt (min, max) {
+		   	// Expects location1 and location2 to be of type google.maps.LatLng
+		   	function create_polyline (location1, location2) {
+		   		var path = new google.maps.Polyline({
+					path: [location1, location2],
+					geodesic: true,
+					strokeColor: '#6699CC',
+					strokeOpacity: .6,
+					strokeWeight: 4
+				});
+
+				path.setMap(map);
+		   	}
+
+		    function get_random_int (min, max) {
     			return Math.floor(Math.random() * (max - min + 1)) + min;
 			}
 

@@ -9,4 +9,5 @@ Say approximately how many hours you have spent completing the assignment.
 45min
 25min
 1hr
-5:03 -
+2hrs
+30min
