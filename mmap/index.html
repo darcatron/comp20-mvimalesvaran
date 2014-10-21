@@ -159,9 +159,10 @@
 		    							new google.maps.LatLng(my_crd.latitude, 
 		    												 my_crd.longitude));
 
-		    		distances_table.push([name, [lat, lng]]);
+		    		distances_table.push([name, get_distance(lat, lng, 
+		    												my_crd.latitude, 
+		   													my_crd.longitude)]);
 			  		google.maps.event.addDomListener(marker_character, 'click', function () {infowindow_character.open(map, marker_character);});
-
 		    	};
 		    }
 		   	// Expects location1 and location2 to be of type google.maps.LatLng
@@ -178,17 +179,17 @@
 		   	}
 
 		   	function create_distance_table () {
-		   		var name = 0, coords = 1, lat = 0, lng = 1, distance = null;
+		   		var name = 0, distance = 1;
 		   		var table = document.getElementById("distances-table");
-									   		
+		   		console.log(distances_table);	   		
+				distances_table.sort(function (a, b) {
+					return a[1] - b[1];
+				});
+		   		console.log(distances_table);	   		
 		   		distances_table.forEach(function (entry) {
-		   			distance = get_distance(entry[coords][lat], 
-		   										entry[coords][lng], 
-		   										my_crd.latitude, 
-		   										my_crd.longitude);
 		   			table.innerHTML += entry[name].charAt(0).toUpperCase() + 
 		   								entry[name].substr(1).toLowerCase() +
-		   								" | " + distance + " meters</br>";
+		   								" | " + entry[distance].replace(/\d(?=(\d{3})+\.)/g, '$&,') + " meters</br>";
 		   		});		   		
 		   		map.controls[google.maps.ControlPosition.TOP_RIGHT].push(table);
 		   	}
@@ -208,8 +209,10 @@
 			  var d = R * c;
 			  // returns the distance in meters 
 			  // number formating credits to StackOverFlow user VisioN
-			  return d.toFixed(PRECISION).replace(/\d(?=(\d{3})+\.)/g, '$&,'); 
+			  return d.toFixed(PRECISION); 
 			};
+
+			
 
 		    function get_random_int (min, max) {
     			return Math.floor(Math.random() * (max - min + 1)) + min;
