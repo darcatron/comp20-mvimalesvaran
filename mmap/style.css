@@ -4,12 +4,14 @@ html, body, #map-canvas {
 	padding: 0px;
 }
 
-.gm-style-iw div {overflow:visible !important;}
+.gm-style-iw div {
+	overflow:visible !important;
+}
 
 #distances-table {	
 	position: absolute;
 	height: 30%;
-	width: 15%;
+	width: 20%;
 	background-color: green;
 	color: white;
 	font-size: 15px;

@@ -187,9 +187,11 @@
 				});
 		   		console.log(distances_table);	   		
 		   		distances_table.forEach(function (entry) {
+			  // number formating credits to StackOverFlow user VisioN
 		   			table.innerHTML += entry[name].charAt(0).toUpperCase() + 
 		   								entry[name].substr(1).toLowerCase() +
-		   								" | " + entry[distance].replace(/\d(?=(\d{3})+\.)/g, '$&,') + " meters</br>";
+		   								" | " + entry[distance].replace(/\d(?=(\d{3})+\.)/g, '$&,') + 
+		   								" meters</br>";
 		   		});		   		
 		   		map.controls[google.maps.ControlPosition.TOP_RIGHT].push(table);
 		   	}
@@ -208,7 +210,6 @@
 			  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 			  var d = R * c;
 			  // returns the distance in meters 
-			  // number formating credits to StackOverFlow user VisioN
 			  return d.toFixed(PRECISION); 
 			};
 
