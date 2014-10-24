@@ -16,13 +16,15 @@
 	   		localStorage[current_date] = $("#msg").val();
 	   		
 	   		if (!locals_listed) {
+	   			$("#news").html("");
 		   		for (var key in localStorage){
-			    	$("#news").prepend("<br>" + localStorage.getItem(key));
+			    	$("#news").prepend("<br> " + key + " " + localStorage.getItem(key));
 				}	
 				locals_listed = true;
+	   		} else {
+				$("#news").prepend("<br> " + current_date + " " + $("#msg").val());
 	   		}
 
-			$("#news").prepend("<br>" + $("#msg").val());
 		  }
 		});
 	});
