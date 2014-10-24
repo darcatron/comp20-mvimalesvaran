@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<title>My News Feed</title>
+	<script src="../../jquery-2.1.1.min.js"></script>
+	<script>
+	locals_listed = false;
+
+	$(document).ready(function () {
+		$( "#msg" ).keydown(function( event ) {
+		  if ( event.which == 13 ) {
+		  	var current_date = new Date();
+		  
+	   		localStorage[current_date] = $("#msg").val();
+	   		
+	   		if (!locals_listed) {
+		   		for (var key in localStorage){
+			    	$("#news").prepend("<br>" + localStorage.getItem(key));
+				}	
+				locals_listed = true;
+	   		}
+
+			$("#news").prepend("<br>" + $("#msg").val());
+		  }
+		});
+	});
+	
+	
+	</script>
+</head>
+
+<body>
+	<h1 id="test">My News Feed</h1>
+	<h3>My news update: <input type="text" id="msg" name="msg" size="30" /></h3>
+	<div id="news">News...</div>
+</body>
+</html>
