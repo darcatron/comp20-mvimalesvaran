@@ -6,26 +6,19 @@
 	<title>My News Feed</title>
 	<script src="../../jquery-2.1.1.min.js"></script>
 	<script>
-	locals_listed = false;
 
 	$(document).ready(function () {
+		$("#news").text("");
+		for (var key in localStorage){
+		   	$("#news").prepend("<br> " + key + " " + localStorage.getItem(key));
+		}	
 		$( "#msg" ).keydown(function( event ) {
 		  if ( event.which == 13 ) {
 		  	var current_date = new Date();
 		  
 	   		localStorage[current_date] = $("#msg").val();
-	   		
-	   		if (!locals_listed) {
-	   			$("#news").html("");
-		   		for (var key in localStorage){
-			    	$("#news").prepend("<br> " + key + " " + localStorage.getItem(key));
-				}	
-				locals_listed = true;
-	   		} else {
-				$("#news").prepend("<br> " + current_date + " " + $("#msg").val());
+	   		$("#news").prepend("<br> " + current_date + " " + $("#msg").val());
 	   		}
-
-		  }
 		});
 	});
 	
