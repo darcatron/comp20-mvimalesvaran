@@ -9,6 +9,6 @@
 -	2 hours
 -	1 hour
 -	1 hour
-- 	1 hour
+- 1 hour
 -------------------
 *TOTAL*: 9 hours
