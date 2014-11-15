@@ -76,9 +76,8 @@
 		   
 	 		function find_others() {
 	 			var lat = 0, lng = 1, crd = LOCATIONS[get_random_int(0, 3)];
-
 	 			xhr = new XMLHttpRequest();
-	 			xhr.open("POST", "http://chickenofthesea.herokuapp.com/sendLocation", true);
+	 			xhr.open("POST", "https://desolate-mesa-8778.herokuapp.com/sendLocation", true);
 		        xhr.onreadystatechange = dataReady;
 		        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		        xhr.send("login=" + GLOBAL_LOGIN + "&lat=" + crd[lat] + 
@@ -113,9 +112,6 @@
 		    	create_distance_table()
 		    	
 		    	function plot_students(login, lat, lng, time_seen) {
-		    		if (login == "Dipstick") {
-		    		}
-
 		    		var content_string_student = '<h1>' + login + '</h1>' + 
 			  							'<div id="contentString">' +
 			  							'<p>Latitude: ' + 
