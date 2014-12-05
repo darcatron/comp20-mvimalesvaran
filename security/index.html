@@ -53,7 +53,7 @@
 				</li>
 			</ul>
 		<hr>
-		<h3>Abtract Findings:</h3> The site's main issues exist due to user login and location sending. There is no login and location verification and so users can enter whatever they please into the site. Another issue comes from the lack of a HTTP security headers and allows anversaries to use the whispering-reachers site's content in their own site and manipulate user input. The final issue is with database overloading which can heavily slow down the site.
+		<h3>Abstract Findings:</h3> The site's main issues exist due to user login and location sending. There is no login and location verification and so users can enter whatever they please into the site. Another issue comes from the lack of a HTTP security headers and allows adversaries to use the whispering-reaches site's content in their own site and manipulate user input. The final issue is with database overloading which can heavily slow down the site.
 		<hr>
 		<h3>Detailed Findings:</h3>
 			<ul>
@@ -72,7 +72,7 @@
 				</li>
 				<hr>
 				<!-- http://security.stackexchange.com/questions/38241/how-does-this-test-prove-my-application-is-vulnerable-to-clickjacking-attacks0 -->
-				<li><div id="main-list-item">Issue: Clickjacking and Phising</div>
+				<li><div id="main-list-item">Issue: Clickjacking and Phishing</div>
 					<ul>
 						<li>Severity: Medium/High</li>
 						<div class="meter orange" id="page-wrap">
@@ -92,7 +92,7 @@
 							<span style="width: 50%"></span>
 						</div>
 						<li>Location: http://whispering-reaches-1894.herokuapp.com/ and http://whispering-reaches-1894.herokuapp.com/sendLocation</li>
-						<li>Description: The main page displays all the items in the database. When there are an excessive amount of items, the page can take a while to load and can essentially unuseable. For high demand sites, the server can also be timed out because of too many requests.</li>
+						<li>Description: The main page displays all the items in the database. When there are an excessive amount of items, the page can take a while to load and can essentially unusable. For high demand sites, the server can also be timed out because of too many requests.</li>
 						<li>Resolution: Limit the number of user POSTs to a certain number a minute and limit the number of displayed logins on the front page. Client can also purchase more dynos to handle more user traffic.</li>
 						<video controls>
 							<source src="page_slow_load.mp4" type="video/mp4">
@@ -109,20 +109,19 @@
 						</div>
 						<li>Location: http://whispering-reaches-1894.herokuapp.com/sendLocation</li>
 						<li>Description: Users can POST any login they want or even enter the same login multiple times. Users can also enter a fake or inaccurate location.</li>
-						<li>Resolution: If user logins are unqiue, then a verification token can be used to make sure the user is who they say they are. Duplicate logins can be avoided by doing a run through the database. Locations can be verified by checking provided location against the location of the IP. Lats and Longs can be verified that they are legitimate values as well.</li>
+						<li>Resolution: If user logins are unique, then a verification token can be used to make sure the user is who they say they are. Duplicate logins can be avoided by doing a run through the database. Locations can be verified by checking provided location against the location of the IP. Latitudes and Longitudes can be verified that they are legitimate values as well.</li>
 						<img src="logins.png" alt="Fake and multiple login example">
 						<img src="lat_lng.png" alt="Fake latitude and longitude example">
 					</ul>
 				</li>
 			</ul>
 
-		<!-- Conclusion - You can also list future considerations and recommendations with costs. -->
 		<hr>
 		<h3>Conclusion:</h3>
 			<ul>
 				<li><div id="main-list-item">Conclusion:</div>
 					<ul>
-				    	<li>Most of the issues for this site come from user input. The lack of validation is what creates the vulnerabilities listed above. The best security fix would be to incorportate the adjustments listed above. Most are short code checks or headers.</li>
+				    	<li>Most of the issues for this site come from user input. The lack of validation is what creates the vulnerabilities listed above. The best security fix would be to incorporate the adjustments listed above. Most are short code checks or headers.</li>
 					</ul>
 				</li>
 				<li><div id="main-list-item">Future Considerations:</div>
