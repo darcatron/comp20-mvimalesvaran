@@ -2,96 +2,136 @@
 <html>
 <head>
 	<title>Security Assessment</title>
+	<meta charset='UTF-8'>
+	<link rel='stylesheet' href='style.css'>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+	<script>
+		$(function() {
+			$(".meter > span").each(function() {
+				$(this)
+					.data("origWidth", $(this).width())
+					.width(0)
+					.animate({
+						width: $(this).data("origWidth")
+					}, 1200);
+			});
+		});
+	</script>
 </head>
 <body>
-	<h2>Mathurshan's Security Report!</h2>
-	<ul>
+	<h1>Mathurshan's Security Report!</h1>
 
-		<li>Intro:
+		<h3>Intro:</h3>
 			<ul>
-				<li>Product: Heroku website where the main page displays stored user data on who the user is, where the user is, and what time the user was there. Site also displays redline information in JSON format, displays queried users in array object format, and returns JSON string of entire database when a post request is sent with a login, latitude, and longitude.</li>
-				<li>Reason Hired: Consultant to document and resolve the security issues in the web application.</li>
+				<li><div id="main-list-item">Product:</div> 
+					<ul>	
+				    	<li>Heroku website where the main page displays stored user data on who the user is, where the user is, and what time the user was there. Site also displays redline information in JSON format, displays queried users in array object format, and returns JSON string of entire database when a post request is sent with a login, latitude, and longitude. Heroku website is linked to github pages site that displays a cursor for the 100 most recent users on a google map</li>
+					</ul>
+				</li>
+				<li><div id="main-list-item">Reason Hired:</div> 
+					<ul>
+				    	<li>Consultant to document and resolve the security issues in the web application.</li>
+					</ul>
+				</li>
 			</ul>
-		</li>
-
-		<!-- Methodology - Describe your methodology pen testing the application, including the tools that you used -->
-		<li>Methodology: 
+		<hr>
+		<h3>Methodology:</h3>
 			<ul>
-				<li>Testing:</li>
-				<li>Tools</li>
+				<li><div id="main-list-item">Testing:</div>
+					<ul>
+					    <li>index/locations - query inputs</li>
+					    <li>index/sendLocation - mongodb and inputs</li>
+					    <li>index/ - up time, load time, and display content</li>
+					</ul>
+				</li>
+				<li><div id="main-list-item">Tools:</div>
+					<ul>
+					    <li>Chrome/Firefox Developer Tools</li>
+					    <li>Git Bash</li>
+					    <li>Source Code</li>
+					</ul>
+				</li>
 			</ul>
-		</li>
-
-		<!-- Abstract of Findings - Provide an overview of all the security issues you identified. This section should be written for non-technical managers who do not have technical expertise and do not have time to read the entire document. Write this section using lay language. -->
-		<li>Abtract Findings:
-			<ul> 
-				<!-- maybe just have one bullet point with a sentence here -->
-				<li>Found:</li>
-				<li>Found:</li>
-				<li>Found:</li>
-				<li>Found:</li>
-			</ul>
-		</li>
-
-		<!-- Issues Found - For each issue that you find, document: -->
-		<!-- Issue (e.g., database injection, really bad programming practice) -->
-		<!-- Location / page where issue was found -->
-		<!-- Severity of issue (e.g., low, medium , or high). Justify your answer. -->
-		<!-- Description of issue. How did you find it? A screenshot of problem is excellent. -->
-		<!-- Proof of vulnerability. Screenshots are ideal. -->
-		<!-- Resolution. How did you resolve the issue? Show code if possible. -->
-		<li>Detailed Findings:
+		<hr>
+		<h3>Abtract Findings:</h3> The site's main issues exist due to user login and location sending. There is no login and location verification and so users can enter whatever they please into the site. Another issue comes from the lack of a HTTP security headers and allows anversaries to use the whispering-reachers site's content in their own site and manipulate user input. The final issue is with database overloading which can heavily slow down the site.
+		<hr>
+		<h3>Detailed Findings:</h3>
 			<ul>
 
-				<li>Issue:
+				<li><div id="main-list-item">Issue: XSS</div>
 					<ul>
-						<li>Location:</li>
-						<li>Severity:</li>
-						<li>Description:</li>
-						<li>Resolution:</li>
+						<li>Severity: High</li>
+						<div class="meter red" id="page-wrap">
+							<span style="width: 100%"></span>
+						</div>
+						<li>Location: http://whispering-reaches-1894.herokuapp.com/</li>
+						<li>Description: User input for login is not checked. Script tags can be inputted to alter main page.</li>
+						<li>Resolution: By replacing the '<' and '>' characters with &amp;lt and &amp;gt, the script, style, and event handlers are no longer recognized</li>
+						<img src="XSS.png" alt="Server Side Scripting Example">
 					</ul>
 				</li>
-
-				<li>Issue:
+				<hr>
+				<!-- http://security.stackexchange.com/questions/38241/how-does-this-test-prove-my-application-is-vulnerable-to-clickjacking-attacks0 -->
+				<li><div id="main-list-item">Issue: Clickjacking and Phising</div>
 					<ul>
-						<li>Location:</li>
-						<li>Severity:</li>
-						<li>Description:</li>
-						<li>Resolution:</li>
+						<li>Severity: Medium/High</li>
+						<div class="meter orange" id="page-wrap">
+							<span style="width: 75%"></span>
+						</div>
+						<li>Location: Entire Site</li>
+						<li>Description: The site can be iframed within another site. This means an adversary can phish for genuine user data by tricking them into believing the malicious, fake site is the real site.</li>
+						<li>Resolution: Adding an HTML header to prevent iframing: <code>X-Frame-Options: DENY</code></li>
+						<img src="clickjack.png" alt="Clickjack example">
 					</ul>
 				</li>
-
-				<li>Issue:
+				<hr>
+				<li><div id="main-list-item">Issue: Overload Database and Slow Down Site</div>
 					<ul>
-						<li>Location:</li>
-						<li>Severity:</li>
-						<li>Description:</li>
-						<li>Resolution:</li>
+						<li>Severity: Medium</li>
+						<div class="meter orange" id="page-wrap">
+							<span style="width: 50%"></span>
+						</div>
+						<li>Location: http://whispering-reaches-1894.herokuapp.com/ and http://whispering-reaches-1894.herokuapp.com/sendLocation</li>
+						<li>Description: The main page displays all the items in the database. When there are an excessive amount of items, the page can take a while to load and can essentially unuseable. For high demand sites, the server can also be timed out because of too many requests.</li>
+						<li>Resolution: Limit the number of user POSTs to a certain number a minute and limit the number of displayed logins on the front page. Client can also purchase more dynos to handle more user traffic.</li>
+						<video controls>
+							<source src="page_slow_load.mp4" type="video/mp4">
+							Your browser does not support the video tag :(
+						</video>
 					</ul>
 				</li>
-
-				<li>Issue:
+				<hr>
+				<li><div id="main-list-item">Issue: Fake Login, Duplicate Login, Multiple Entry in Database for Login, Fake Location</div>
 					<ul>
-						<li>Location:</li>
-						<li>Severity:</li>
-						<li>Description:</li>
-						<li>Resolution:</li>
+						<li>Severity: Low/Medium</li>
+						<div class="meter" id="page-wrap">
+							<span style="width: 35%"></span>
+						</div>
+						<li>Location: http://whispering-reaches-1894.herokuapp.com/sendLocation</li>
+						<li>Description: Users can POST any login they want or even enter the same login multiple times. Users can also enter a fake or inaccurate location.</li>
+						<li>Resolution: If user logins are unqiue, then a verification token can be used to make sure the user is who they say they are. Duplicate logins can be avoided by doing a run through the database. Locations can be verified by checking provided location against the location of the IP. Lats and Longs can be verified that they are legitimate values as well.</li>
+						<img src="logins.png" alt="Fake and multiple login example">
+						<img src="lat_lng.png" alt="Fake latitude and longitude example">
 					</ul>
 				</li>
-
 			</ul>
-		</li>
 
 		<!-- Conclusion - You can also list future considerations and recommendations with costs. -->
-		<li>Conclusion:
+		<hr>
+		<h3>Conclusion:</h3>
 			<ul>
-				<li>Conclusion:</li>
-				<li>Future Considerations:</li>
-				<li>Recommendations:</li>
+				<li><div id="main-list-item">Conclusion:</div>
+					<ul>
+				    	<li>Most of the issues for this site come from user input. The lack of validation is what creates the vulnerabilities listed above. The best security fix would be to incorportate the adjustments listed above. Most are short code checks or headers.</li>
+					</ul>
+				</li>
+				<li><div id="main-list-item">Future Considerations:</div>
+					<ul>
+				    	<li>Any time user input is accepted, validate what they send in. There is software that automatically checks for vulnerability around a site such as Burp Suite. This can be used to fix potential issues and protect the site from attackers. It will cost roughly $300 a year.</li>
+					</ul>
+				</li>
 			</ul>
-		</li>
 
-	</ul>
 </body>
 </html>
 

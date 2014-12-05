@@ -1,0 +1,1 @@
+login=name&lat=1&lng=1
